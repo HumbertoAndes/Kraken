@@ -179,3 +179,154 @@ Then('the view site is succesful', async function () {
     cosa.isDisplayed();
     await new Promise(resolve => setTimeout(resolve, 3000));
 });
+
+Then('the admin view all blogs related to developers', async function()  {
+    let results = await this.driver.$('strong[class="font-semibold text-gray-600"]')
+    results.firt().contains('developers')
+})
+
+When('the admin looking for developers', async function() {
+    let inputSearch = await this.driver.$('input[placeholder="Search across all creators"]')
+    inputSearch.setValue("developers")
+    await new Promise(resolve => setTimeout(resolve, 2000));
+})
+
+Given('the admin select the explore option', async function () {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let buttonExplore = await this.driver.$('button[data-test-button="confirm-publish"]')
+    buttonExplore.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+})
+
+When('the admin select the posts option', async function () {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let buttonPosts = await this.driver.$('#ember19')
+    buttonPosts.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+})
+
+When('the admin create a post', async function () {
+    let iconMore = await this.driver.$('#ember20')
+    iconMore.click()
+    let titlePost = await this.driver.$('textarea[class="gh-editor-title  ember-text-area gh-input ember-view"]')
+    titlePost.setValue('Post Pruebas Automatizadas')
+    let descriptionPost = await this.driver.$('div[class="kg-prose"]')
+    descriptionPost.setValue('Esta es un prueba automatizada para la universidad de los andes')
+    let publishPost = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')    
+    publishPost.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let acceptChanges = await this.driver.$('button[class="gh-btn gh-btn-black gh-btn-large"]')
+    acceptChanges.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let confirmPublish = await this.driver.$('button[data-test-button="confirm-publish"]')
+    confirmPublish.click()
+})
+
+Then('the admin validates the creation of the post',  async function () {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let titlePostPublish = await this.driver.$('div[class="gh-post-bookmark-title"]')
+    titlePostPublish.contains('Post Pruebas Automatizadas')
+})
+
+Then('validates that the post has been published', async function()  {
+    let validatePublish = await this.driver.$('div[class="gh-post-bookmark-title"]')
+    validatePublish.contains('Post Pruebas Automatizadas')
+})
+
+Then('publish the post', async function() {
+    let publishPost = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')    
+    publishPost.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let acceptChanges = await this.driver.$('button[class="gh-btn gh-btn-black gh-btn-large"]')
+    acceptChanges.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let confirmPublish = await this.driver.$('button[data-test-button="confirm-publish"]')
+    confirmPublish.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+})
+
+When('the admin from the main panel select draft postings', async function() {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let allPost = await this.driver.$('a[class="ember-view"]')
+    allPost.click();
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let editPost = await this.driver.$('span.gh-post-list-cta.edit')
+    editPost.first().click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let previewPost = await this.driver.$('button[class="gh-btn gh-btn-editor gh-editor-preview-trigger"]')
+    previewPost.click()
+    await new Promise(resolve => setTimeout(resolve, 2000)); 
+})
+
+When('the admin is logged into the ghost', async function () {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let email = await this.driver.$('input[name="identification"]');
+    email.setValue("lm.avilas1@uniandes.edu.co");
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let pass = await this.driver.$('input[name="password"]');
+    pass.setValue("AvilaLina1");
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let button = await this.driver.$('#ember5');
+    button.click();
+    await new Promise(resolve => setTimeout(resolve, 2000));
+})
+
+Given('the admin select the drafs option', async function() {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let buttonDrafts = await this.driver.$('a[title="Drafts"]')
+    buttonDrafts.click()
+})
+
+When('the admin edit a post', async function() {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let buttonDrafts = await this.driver.$('span.gh-post-list-cta.edit')
+    buttonDrafts.first().click()
+    let buttonSetting = await this.driver.$('button[ title="Settings"]')
+    buttonSetting.click()
+    let buttonDeleteFirst = await this.driver.$('button[class="gh-btn gh-btn-outline gh-btn-icon gh-btn-fullwidth"]')
+    buttonDeleteFirst.setDisplayed()        
+})
+
+Then('the admin validates the deletion of the post', async function(){
+    let deleteFinish = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]')
+    deleteFinish.click()
+})
+
+Given('the admin select the schedules option', async function() {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let buttonSchedules = await this.driver.$('a[title="Scheduled"]')
+    buttonSchedules.click()
+})
+
+When('the admin create a scheduled publication', async function () {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let buttonCreatePost = await this.driver.$('a[class="ember-view gh-btn gh-btn-primary"]')
+    buttonCreatePost.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let titlePost = await this.driver.$('textarea[class="gh-editor-title  ember-text-area gh-input ember-view"]')
+    titlePost.setValue('Post Pruebas Automatizadas')
+    let descriptionPost = await this.driver.$('div[class="kg-prose"]')
+    descriptionPost.setValue('Esta es un prueba automatizada para la universidad de los andes')
+    let publishPost = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')    
+    publishPost.click()
+    let settingsPost = await this.driver.$('button[class="gh-publish-setting-title "]')
+    settingsPost.click()
+    let datePost = await this.driver.$('div[class="gh-radio "]')
+    datePost.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let acceptChanges = await this.driver.$('button[class="gh-btn gh-btn-black gh-btn-large"]')
+    acceptChanges.click()
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let confirmPublish = await this.driver.$('button[data-test-button="confirm-publish"]')
+    confirmPublish.click()
+})
+
+Then('the admin validates the scheduled publication', async function () {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    let backEditor = await this.driver.$('button[class="gh-btn-editor gh-publish-back-button"]')
+    backEditor.click()
+    let backPost = await this.driver.$('a[class="ember-view gh-btn-editor gh-editor-back-button"]')
+    backPost.click()
+    let validationTitlePost = await this.driver.$('h3[class="gh-content-entry-title"]')
+    validationTitlePost.contains('Post Pruebas Automatizadas')
+})
